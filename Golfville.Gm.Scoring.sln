@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33414.496
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Golfville.Gm.Scoring.Api", "Golfville.Gm.Scoring.Api\Golfville.Gm.Scoring.Api.csproj", "{E5AE6522-971C-4893-A54B-43236BCA890D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Golfville.Gm.Scoring.Data", "Golfville.Gm.Scoring.Data\Golfville.Gm.Scoring.Data.csproj", "{3D94AE9C-1A0B-4220-BAE9-F2A9F8C8965D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E5AE6522-971C-4893-A54B-43236BCA890D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5AE6522-971C-4893-A54B-43236BCA890D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5AE6522-971C-4893-A54B-43236BCA890D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5AE6522-971C-4893-A54B-43236BCA890D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D94AE9C-1A0B-4220-BAE9-F2A9F8C8965D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D94AE9C-1A0B-4220-BAE9-F2A9F8C8965D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D94AE9C-1A0B-4220-BAE9-F2A9F8C8965D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D94AE9C-1A0B-4220-BAE9-F2A9F8C8965D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {48EB4795-8120-4AC7-AA00-FAE72E958D88}
+	EndGlobalSection
+EndGlobal

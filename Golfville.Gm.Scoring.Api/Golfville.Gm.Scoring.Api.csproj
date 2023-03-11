@@ -14,4 +14,8 @@
     <Folder Include="Models\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Golfville.Gm.Scoring.Data\Golfville.Gm.Scoring.Data.csproj" />
+  </ItemGroup>
+
 </Project>
