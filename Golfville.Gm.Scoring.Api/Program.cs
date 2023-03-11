@@ -1,15 +1,27 @@
 using Golfville.Gm.Scoring.Data.Extensions;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+var configuration = new ConfigurationBuilder()
+    .AddCommandLine(Environment.GetCommandLineArgs())
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true)
+    .Build();
+
+Log.Logger = new LoggerConfiguration().ReadFrom.Configuration(configuration).CreateLogger();
+var logger = Log.ForContext<Program>();
+
+var scoringDbConnectionString = configuration.GetConnectionString("gmdb");
+var scoringDbName = configuration.GetValue<string>("gmdbname");
+
+logger.Information("Connecting to database {scoringDbName} with connection string {scoringDbConnectionString}", scoringDbName, scoringDbConnectionString);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddScoringRepositoryServices("https://localhost:8081",
-                    "C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==",
-                    "golfmaniacs");
+builder.Services.AddScoringRepositoryServices(scoringDbConnectionString, scoringDbName);
 
 var app = builder.Build();
 
@@ -21,9 +33,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();
