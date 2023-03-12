@@ -4,7 +4,8 @@ namespace Golfville.Gm.Scoring.Data.Repositories
 {
     public interface IMemberScoreRepository
     {
-        Task<List<MemberScore>> GetScoresAsync(int userId, int top);
+        Task<List<MemberScore>> GetAllForYearAsync(int year);
+        Task<List<MemberScore>> GetScoresAsync(int userId, int? top);
         Task<MemberScore> AddScoreAsync(MemberScore memberScore);
     }
 }

@@ -8,15 +8,15 @@ namespace Golfville.Gm.Scoring.Data.Extensions
     public static class ScoringRepositoryServiceExtension
     {
         public static void AddScoringRepositoryServices(
-            this IServiceCollection serviceCollection,
-            string connectionString,            
+            this IServiceCollection serviceCollection,            
             string databaseName
         )
         {
             serviceCollection.AddTransient<IMemberScoreRepository, MemberScoreRepository>();
-            serviceCollection.AddDbContext<IGmDbContext, GmDbContext>(option =>
-            {                
-                option.UseCosmos(connectionString: connectionString, databaseName: databaseName);
+            serviceCollection.AddTransient<IScoringDbContext, ScoringDbContext>();
+            serviceCollection.AddDbContext<ScoringDbContext>(option =>
+            {
+                option.UseInMemoryDatabase(databaseName);
             });
         }
     }

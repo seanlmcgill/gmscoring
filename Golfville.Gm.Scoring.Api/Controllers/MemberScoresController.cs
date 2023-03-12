@@ -17,12 +17,20 @@ namespace Golfville.Gm.ScoringApi.Controllers
         }
 
         [HttpGet("/member/{memberId}/scores", Name = "GetMemberScores")]
-        public IEnumerable<MemberScore> Get()
+        public async Task<IActionResult> Get(int memberId, int? top)
         {
-            return new List<MemberScore>();    
+            var scores = await _memberScoreRepository.GetScoresAsync(memberId, top);
+            return Ok(scores);
         }
 
-        [HttpPost("/memberscore", Name = "AddMemberScore")]
+        [HttpGet("/memberscores/{year}", Name = "GetAllMemberScores")]
+        public async Task<IActionResult> GetAllAsync(int year)
+        {
+            var scores = await _memberScoreRepository.GetAllForYearAsync(year);
+            return Ok(scores);
+        }
+
+        [HttpPost("/memberscores", Name = "AddMemberScore")]
         public async Task<MemberScore> PostAsync(MemberScore score)
         {
             var newScore = await _memberScoreRepository.AddScoreAsync(score);            

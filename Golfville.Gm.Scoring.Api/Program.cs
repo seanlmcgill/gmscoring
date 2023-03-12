@@ -1,3 +1,4 @@
+using Golfville.Gm.Scoring.Data.Entities;
 using Golfville.Gm.Scoring.Data.Extensions;
 using Serilog;
 
@@ -13,17 +14,22 @@ var configuration = new ConfigurationBuilder()
 Log.Logger = new LoggerConfiguration().ReadFrom.Configuration(configuration).CreateLogger();
 var logger = Log.ForContext<Program>();
 
-var scoringDbConnectionString = configuration.GetConnectionString("gmdb");
-var scoringDbName = configuration.GetValue<string>("gmdbname");
-
-logger.Information("Connecting to database {scoringDbName} with connection string {scoringDbConnectionString}", scoringDbName, scoringDbConnectionString);
+var scoringDbName = configuration.GetValue<string>("ScoringDbName");
+logger.Information("Configured mock in-memory database name for testing is: {scoringDbName}", scoringDbName);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddScoringRepositoryServices(scoringDbConnectionString, scoringDbName);
+builder.Services.AddScoringRepositoryServices(scoringDbName);
 
 var app = builder.Build();
+
+logger.Information("Seeding test data into in memory database: {scoringDbName}", scoringDbName);
+using (var serviceScope = app.Services.CreateScope())
+{
+    var dbContext = serviceScope.ServiceProvider.GetService<ScoringDbContext>();
+    dbContext?.Database.EnsureCreated();
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
