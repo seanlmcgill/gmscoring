@@ -8,6 +8,7 @@ namespace Golfville.Gm.Scoring.Data.Entities
             : base(options) { }
 
         public DbSet<MemberScore> MemberScores { get; set; }
+        public DbSet<Course> Courses { get; set; }
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -17,35 +18,16 @@ namespace Golfville.Gm.Scoring.Data.Entities
                 .Entity<MemberScore>()                                
                 .HasKey(x => x.Id);
 
-            var seedData = GetTestData();
+            modelBuilder
+                .Entity<Course>()
+                .HasKey(x => x.Id);
 
-            modelBuilder.Entity<MemberScore>().HasData(seedData);                           
-        }
+            modelBuilder
+                .Entity<Tee>()
+                .HasKey(x => x.Id);
 
-        public MemberScore[] GetTestData()
-        {
-            var seedScores = new List<MemberScore>();
-            var baseDate = new DateTime(2022, 01, 01);
-            var random = new Random();
-            var postTimeHours = random.Next(11, 16);
-            for (var i=0; i<100; i++)
-            {
-                var memberId = random.Next() % 10;
-                var courseId = random.Next() % 6;
-                var teeBoxId = random.Next() % 4;
-                var score = random.Next(70, 91);
-                seedScores.Add(new MemberScore
-                {
-                    Id = i + 1,
-                    MemberId = memberId,
-                    CourseId = courseId,
-                    TeeBoxId = teeBoxId,
-                    Score = score,
-                    PostingDateTime = baseDate + new TimeSpan(i + 2, postTimeHours, 0, 0)
-                });
-            }
-
-            return seedScores.ToArray();
-        }
+            modelBuilder.Entity<MemberScore>().HasData(SeedGenerator.GetTestMemberScores());
+            modelBuilder.Entity<Course>().HasData(SeedGenerator.GetTestCourses());
+        }       
     }
 }

@@ -7,6 +7,8 @@ namespace Golfville.Gm.Scoring.Data.Entities
     {
         public DatabaseFacade Database { get; }
         public DbSet<MemberScore> MemberScores { get; set; }
+        public DbSet<Course> Courses { get; set; }
         int SaveChanges();
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }
