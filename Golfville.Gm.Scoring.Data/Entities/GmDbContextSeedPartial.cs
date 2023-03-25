@@ -8,10 +8,10 @@ namespace Golfville.Gm.Scoring.Data.Entities
     /// </summary>
     public partial class GmDbContext
     {
-        partial void OnModelCreatingPartial(ModelBuilder builder)
+        partial void OnModelCreatingPartial(ModelBuilder modelBuilder)
         {
-            builder.Entity<Course>().HasData(CourseSeeder.GetCourses());
-            builder.Entity<TeeBox>().HasData(TeeBoxSeeder.GetTeeBoxes());
+            modelBuilder.Entity<Course>().HasData(CourseSeeder.GetCourses());
+            modelBuilder.Entity<TeeBox>().HasData(TeeBoxSeeder.GetTeeBoxes());
         }
     }
 }
