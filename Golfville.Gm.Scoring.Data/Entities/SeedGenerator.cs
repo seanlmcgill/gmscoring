@@ -11,18 +11,16 @@
             for (var i = 0; i < 100; i++)
             {
                 var memberId = random.Next() % 10;
-                var courseId = random.Next() % 6;
                 var teeBoxId = random.Next() % 4;
                 var score = random.Next(70, 91);
                 seedScores.Add(
                     new MemberScore
                     {
-                        Id = i + 1,
+                        MemberScoreId = i + 1,
                         MemberId = memberId,
-                        CourseId = courseId,
                         TeeBoxId = teeBoxId,
                         Score = score,
-                        PostingDateTime = baseDate + new TimeSpan(i + 2, postTimeHours, 0, 0)
+                        PostDateTime = baseDate + new TimeSpan(i + 2, postTimeHours, 0, 0)
                     }
                 );
             }
@@ -36,192 +34,226 @@
             {
                 new()
                 {
-                    Id = 1,
+                    CourseId = 1,
                     Name = "TPC Sawgrass",
-                    Address = "110 Championship Way, Ponte Vedra Beach, FL 32082",
-                    TeeList = new List<Tee>()
-                    {
-                        new()
-                        {
-                            Id = 1,
-                            Description = "The Players",
-                            Rating = 76.8,
-                            Slope = 155
-                        },
-                        new()
-                        {
-                            Id = 2,
-                            Description = "Blue",
-                            Rating = 73.9,
-                            Slope = 148
-                        },
-                        new()
-                        {
-                            Id = 3,
-                            Description = "White",
-                            Rating = 70.8,
-                            Slope = 138
-                        },
-                        new()
-                        {
-                            Id = 4,
-                            Description = "Green",
-                            Rating = 65.8,
-                            Slope = 116
-                        }
-                    }
+                    AddressLine1 = "110 Championship Way",
+                    City = "Ponte Vedra Beach",
+                    StateCode = "FL",
+                    PostalCode = "32082",
+                    PublicAccess = false
                 },
                 new()
                 {
-                    Id = 2,
+                    CourseId = 2,
                     Name = "Lederach",
-                    Address = "900 Clubhouse Dr, Harleysville, PA 19438",
-                    TeeList = new List<Tee>()
-                    {
-                        new()
-                        {
-                            Id = 1,
-                            Description = "Black",
-                            Rating = 73.9,
-                            Slope = 137
-                        },
-                        new()
-                        {
-                            Id = 2,
-                            Description = "Blue",
-                            Rating = 71.8,
-                            Slope = 134
-                        },
-                        new()
-                        {
-                            Id = 3,
-                            Description = "Green",
-                            Rating = 69.8,
-                            Slope = 134
-                        },
-                        new()
-                        {
-                            Id = 4,
-                            Description = "White",
-                            Rating = 64.3,
-                            Slope = 131
-                        }
-                    }
+                    AddressLine1 = "900 Clubhouse Dr",
+                    City = "Harleysville",
+                    StateCode = "PA",
+                    PostalCode = "19438",
+                    PublicAccess = true
                 },
                 new()
                 {
-                    Id = 3,
+                    CourseId = 3,
                     Name = "Scotland Run",
-                    Address = "2626 Fries Mill Rd, Williamstown, NJ 08094",
-                    TeeList = new List<Tee>()
-                    {
-                        new()
-                        {
-                            Id = 1,
-                            Description = "Black",
-                            Rating = 73.2,
-                            Slope = 136
-                        },
-                        new()
-                        {
-                            Id = 2,
-                            Description = "Blue",
-                            Rating = 71.8,
-                            Slope = 133
-                        },
-                        new()
-                        {
-                            Id = 3,
-                            Description = "Green",
-                            Rating = 70.9,
-                            Slope = 128
-                        },
-                        new()
-                        {
-                            Id = 4,
-                            Description = "White",
-                            Rating = 67.4,
-                            Slope = 118
-                        }
-                    }
+                    AddressLine1 = "2626 Fries Mill Rd",
+                    City = "Williamstown",
+                    StateCode = "NJ",
+                    PostalCode = "08094",
+                    PublicAccess = true
                 },
                 new()
                 {
-                    Id = 4,
+                    CourseId = 4,
                     Name = "Twisted Dune Golf Club",
-                    Address = "2101 Ocean Heights Ave, Egg Harbor Township, NJ 08234",
-                    TeeList = new List<Tee>()
-                    {
-                        new()
-                        {
-                            Id = 1,
-                            Description = "Black",
-                            Rating = 74.9,
-                            Slope = 130
-                        },
-                        new()
-                        {
-                            Id = 2,
-                            Description = "Blue",
-                            Rating = 72.1,
-                            Slope = 126
-                        },
-                        new()
-                        {
-                            Id = 3,
-                            Description = "White",
-                            Rating = 70.0,
-                            Slope = 122
-                        },
-                        new()
-                        {
-                            Id = 4,
-                            Description = "Yellow",
-                            Rating = 67.7,
-                            Slope = 119
-                        }
-                    }
+                    AddressLine1 = "2101 Ocean Heights Ave",
+                    City = "Egg Harbor Township",
+                    StateCode = "NJ",
+                    PostalCode = "08234",
+                    PublicAccess = true
                 },
                 new()
                 {
-                    Id = 5,
+                    CourseId = 5,
                     Name = "Makefield Highlands Golf Club",
-                    Address = "1418 Woodside Rd, Yardley, PA 19067",
-                    TeeList = new List<Tee>()
-                    {
-                        new()
-                        {
-                            Id = 1,
-                            Description = "Black",
-                            Rating = 73.9,
-                            Slope = 132
-                        },
-                        new()
-                        {
-                            Id = 2,
-                            Description = "Blue",
-                            Rating = 71.8,
-                            Slope = 126
-                        },
-                        new()
-                        {
-                            Id = 3,
-                            Description = "White",
-                            Rating = 69.2,
-                            Slope = 121
-                        },
-                        new()
-                        {
-                            Id = 4,
-                            Description = "Gold",
-                            Rating = 66.9,
-                            Slope = 118
-                        }
-                    }
+                    AddressLine1 = "1418 Woodside Rd",
+                    City = "Yardley",
+                    StateCode = "PA",
+                    PostalCode = "19067",
+                    PublicAccess = true
                 }
             };
 
             return courseList.ToArray();
+        }
+
+        public static List<TeeBox> GetTeeBoxes()
+        {
+            var teeBoxes = new List<TeeBox>()
+            {
+                new()
+                {
+                    TeeBoxId = 1,
+                    CourseId = 1,
+                    Name = "The Players",
+                    Rating = 76.8m,
+                    Slope = 155
+                },
+                new()
+                {
+                    TeeBoxId = 2,
+                    CourseId = 1,
+                    Name = "Blue",
+                    Rating = 73.9m,
+                    Slope = 148
+                },
+                new()
+                {
+                    TeeBoxId = 3,
+                    CourseId = 1,
+                    Name = "White",
+                    Rating = 70.8m,
+                    Slope = 138
+                },
+                new()
+                {
+                    TeeBoxId = 4,
+                    CourseId = 1,
+                    Name = "Green",
+                    Rating = 65.8m,
+                    Slope = 116
+                },
+                new()
+                {
+                    TeeBoxId = 5,
+                    CourseId = 2,
+                    Name = "Black",
+                    Rating = 73.9m,
+                    Slope = 137
+                },
+                new()
+                {
+                    TeeBoxId = 6,
+                    CourseId = 2,
+                    Name = "Blue",
+                    Rating = 71.8m,
+                    Slope = 134
+                },
+                new()
+                {
+                    TeeBoxId = 7,
+                    CourseId = 2,
+                    Name = "Green",
+                    Rating = 69.8m,
+                    Slope = 134
+                },
+                new()
+                {
+                    TeeBoxId = 8,
+                    CourseId = 2,
+                    Name = "White",
+                    Rating = 64.3m,
+                    Slope = 131
+                },
+                new()
+                {
+                    TeeBoxId = 9,
+                    CourseId = 3,
+                    Name = "Black",
+                    Rating = 73.2m,
+                    Slope = 136
+                },
+                new()
+                {
+                    TeeBoxId = 10,
+                    CourseId = 3,
+                    Name = "Blue",
+                    Rating = 71.8m,
+                    Slope = 133
+                },
+                new()
+                {
+                    TeeBoxId = 11,
+                    CourseId = 3,
+                    Name = "Green",
+                    Rating = 70.9m,
+                    Slope = 128
+                },
+                new()
+                {
+                    TeeBoxId = 12,
+                    CourseId = 3,
+                    Name = "White",
+                    Rating = 67.4m,
+                    Slope = 118
+                },
+                new()
+                {
+                    TeeBoxId = 13,
+                    CourseId = 4,
+                    Name = "Black",
+                    Rating = 74.9m,
+                    Slope = 130
+                },
+                new()
+                {
+                    TeeBoxId = 14,
+                    CourseId = 4,
+                    Name = "Blue",
+                    Rating = 72.1m,
+                    Slope = 126
+                },
+                new()
+                {
+                    TeeBoxId = 15,
+                    CourseId = 4,
+                    Name = "White",
+                    Rating = 70.0m,
+                    Slope = 122
+                },
+                new()
+                {
+                    TeeBoxId = 16,
+                    CourseId = 4,
+                    Name = "Yellow",
+                    Rating = 67.7m,
+                    Slope = 119
+                },
+                new()
+                {
+                    TeeBoxId = 17,
+                    CourseId = 5,
+                    Name = "Black",
+                    Rating = 73.9m,
+                    Slope = 132
+                },
+                new()
+                {
+                    TeeBoxId = 18,
+                    CourseId = 5,
+                    Name = "Blue",
+                    Rating = 71.8m,
+                    Slope = 126
+                },
+                new()
+                {
+                    TeeBoxId = 19,
+                    CourseId = 5,
+                    Name = "White",
+                    Rating = 69.2m,
+                    Slope = 121
+                },
+                new()
+                {
+                    TeeBoxId = 20,
+                    CourseId = 5,
+                    Name = "Gold",
+                    Rating = 66.9m,
+                    Slope = 118
+                }
+            };
+
+            return teeBoxes;
         }
     }
 }

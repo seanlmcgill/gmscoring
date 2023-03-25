@@ -7,6 +7,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Golfville.Gm.Scoring.Api", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Golfville.Gm.Scoring.Data", "Golfville.Gm.Scoring.Data\Golfville.Gm.Scoring.Data.csproj", "{3D94AE9C-1A0B-4220-BAE9-F2A9F8C8965D}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Golfville.Gm.Scoring.UnitTests", "Golfville.Gm.Scoring.UnitTests\Golfville.Gm.Scoring.UnitTests.csproj", "{45A44250-C0EB-4EAF-AF95-AE0E3EA34430}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E3D57F98-408E-480C-A6EF-DACA3B6DF85E}"
+	ProjectSection(SolutionItems) = preProject
+		readme.md = readme.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +28,10 @@ Global
 		{3D94AE9C-1A0B-4220-BAE9-F2A9F8C8965D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D94AE9C-1A0B-4220-BAE9-F2A9F8C8965D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D94AE9C-1A0B-4220-BAE9-F2A9F8C8965D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45A44250-C0EB-4EAF-AF95-AE0E3EA34430}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45A44250-C0EB-4EAF-AF95-AE0E3EA34430}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45A44250-C0EB-4EAF-AF95-AE0E3EA34430}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45A44250-C0EB-4EAF-AF95-AE0E3EA34430}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

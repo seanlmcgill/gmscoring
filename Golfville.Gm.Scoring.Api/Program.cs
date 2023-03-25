@@ -1,5 +1,6 @@
 using Golfville.Gm.Scoring.Data.Entities;
 using Golfville.Gm.Scoring.Data.Extensions;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,20 +15,20 @@ var configuration = new ConfigurationBuilder()
 Log.Logger = new LoggerConfiguration().ReadFrom.Configuration(configuration).CreateLogger();
 var logger = Log.ForContext<Program>();
 
-var scoringDbName = configuration.GetValue<string>("ScoringDbName");
-logger.Information("Configured mock in-memory database name for testing is: {scoringDbName}", scoringDbName);
-
+const string inMemDbName = "golfmaniacs";
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddScoringRepositoryServices(scoringDbName);
+builder.Services.AddScoringRepositoryServices(
+    options => options.UseInMemoryDatabase(inMemDbName).EnableSensitiveDataLogging()
+);
 
 var app = builder.Build();
 
-logger.Information("Seeding test data into in memory database: {scoringDbName}", scoringDbName);
+logger.Information("Seeding test data into in memory database: {inMemDbName}", inMemDbName);
 using (var serviceScope = app.Services.CreateScope())
 {
-    var dbContext = serviceScope.ServiceProvider.GetService<ScoringDbContext>();
+    var dbContext = serviceScope.ServiceProvider.GetService<GmDbContext>();
     dbContext?.Database.EnsureCreated();
 }
 
