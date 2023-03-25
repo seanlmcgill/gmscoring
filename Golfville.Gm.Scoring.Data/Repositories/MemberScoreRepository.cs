@@ -5,34 +5,36 @@ namespace Golfville.Gm.Scoring.Data.Repositories
 {
     public class MemberScoreRepository : IMemberScoreRepository
     {
-        private IScoringDbContext _scoringDbContext;
+        private GmDbContext _gmDbContext;
 
-        public MemberScoreRepository(IScoringDbContext scoringDbContext)
+        public MemberScoreRepository(GmDbContext scoringDbContext)
         {
-            _scoringDbContext = scoringDbContext;
+            _gmDbContext = scoringDbContext;
         }
 
-        public async Task<List<MemberScore>> GetScoresAsync(int memberId, int? top)
+        public async Task<List<MemberScore>> GetRecentScores(int memberId, int count = 10)
         {
-            var query = _scoringDbContext.MemberScores.Where(x => x.MemberId == memberId);
+            var scores = await _gmDbContext.MemberScores
+                .Where(x => x.MemberId == memberId)
+                .Take(count)
+                .OrderByDescending(x => x.PostDateTime)
+                .Include(x => x.TeeBox)
+                .ToListAsync();
 
-            if (top != null)
-                query = query.Take(top.Value);
-
-            return await query.ToListAsync();
+            return scores;
         }
 
         public async Task<List<MemberScore>> GetAllForYearAsync(int year)
         {
-            return await _scoringDbContext.MemberScores
-                .Where(x => x.PostingDateTime.Year == year)
+            return await _gmDbContext.MemberScores
+                .Where(x => x.PostDateTime.Year == year)
                 .ToListAsync();
         }
 
         public async Task<MemberScore> AddScoreAsync(MemberScore memberScore)
         {
-            var score = await _scoringDbContext.MemberScores.AddAsync(memberScore);
-            _scoringDbContext.SaveChanges();
+            var score = await _gmDbContext.MemberScores.AddAsync(memberScore);
+            await _gmDbContext.SaveChangesAsync();
             return score.Entity;
         }
     }

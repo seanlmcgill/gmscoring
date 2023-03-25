@@ -1,6 +1,6 @@
 ﻿using Golfville.Gm.Scoring.Data.Models;
 
-namespace Golfville.Gm.Scoring.Data.Repositories
+namespace Golfville.Gm.Scoring.Data.Services
 {
     public interface IHandicapService
     {

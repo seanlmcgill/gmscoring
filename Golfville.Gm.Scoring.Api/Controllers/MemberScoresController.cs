@@ -17,9 +17,9 @@ namespace Golfville.Gm.ScoringApi.Controllers
         }
 
         [HttpGet("/member/{memberId}/scores", Name = "GetMemberScores")]
-        public async Task<IActionResult> Get(int memberId, int? top)
+        public async Task<IActionResult> Get(int memberId, int top = 20)
         {
-            var scores = await _memberScoreRepository.GetScoresAsync(memberId, top);
+            var scores = await _memberScoreRepository.GetRecentScores(memberId, top);
             return Ok(scores);
         }
 
