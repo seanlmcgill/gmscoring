@@ -6,6 +6,8 @@ public partial class TeeBox
 
     public int CourseId { get; set; }
 
+    public TeeColor TeeColor { get; set; }
+
     public string Name { get; set; } = null!;
 
     public int Slope { get; set; }
