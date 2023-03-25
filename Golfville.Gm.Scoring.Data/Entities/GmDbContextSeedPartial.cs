@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Golfville.Gm.Scoring.Data.SeedData;
+using Microsoft.EntityFrameworkCore;
 
 namespace Golfville.Gm.Scoring.Data.Entities
 {
@@ -9,8 +10,8 @@ namespace Golfville.Gm.Scoring.Data.Entities
     {
         partial void OnModelCreatingPartial(ModelBuilder builder)
         {
-            builder.Entity<Course>().HasData(SeedGenerator.GetTestCourses());
-            builder.Entity<TeeBox>().HasData(SeedGenerator.GetTeeBoxes());
+            builder.Entity<Course>().HasData(CourseSeeder.GetCourses());
+            builder.Entity<TeeBox>().HasData(TeeBoxSeeder.GetTeeBoxes());
         }
     }
 }
