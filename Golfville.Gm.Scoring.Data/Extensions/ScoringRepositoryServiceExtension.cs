@@ -17,6 +17,7 @@ namespace Golfville.Gm.Scoring.Data.Extensions
             serviceCollection.AddTransient<IMemberScoreRepository, MemberScoreRepository>();
             serviceCollection.AddTransient<IHandicapService, HandicapService>();
             serviceCollection.AddTransient<ICourseRepository, CourseRepository>();
+            serviceCollection.AddTransient<ITeeBoxRepository, TeeBoxRepository>();
         }
     }
 }

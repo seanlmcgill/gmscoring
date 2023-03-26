@@ -13,4 +13,6 @@ public partial class TeeBox
     public int Slope { get; set; }
 
     public decimal Rating { get; set; }
+
+    public virtual Course Course { get; } = null;
 }

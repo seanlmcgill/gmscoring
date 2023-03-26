@@ -10,15 +10,15 @@ namespace Golfville.Gm.Scoring.Data.Services
         private const int MinScoresRequiredForHandicap = 3;
 
         private readonly IMemberScoreRepository _memberScoreRepository;
-        private readonly ICourseRepository _courseRepository;
+        private readonly ITeeBoxRepository _teeBoxRepository;
 
         public HandicapService(
             IMemberScoreRepository memberScoreRepository,
-            ICourseRepository courseRepository
+            ITeeBoxRepository teeBoxRepository
         )
         {
             _memberScoreRepository = memberScoreRepository;
-            _courseRepository = courseRepository;
+            _teeBoxRepository = teeBoxRepository;
         }
 
         public async Task<Handicap> Calculate(int memberId)
@@ -29,11 +29,11 @@ namespace Golfville.Gm.Scoring.Data.Services
             );
 
             if (memberScores.Count < MinScoresRequiredForHandicap)
-                return new Handicap { NotEligible = true };            
-            
+                return new Handicap { NotEligible = true };
+
             var handicap = Calculate(memberScores);
 
-            return handicap;            
+            return handicap;
         }
 
         private static Handicap Calculate(List<MemberScore> handicapScores)
@@ -52,7 +52,7 @@ namespace Golfville.Gm.Scoring.Data.Services
                                         Differential = 0,
                                         PostDateTime = DateTime.MinValue
                                     }).ToList();
-                                   
+
 
             //foreach (var memberScore in memberScores)
             //{
@@ -67,7 +67,7 @@ namespace Golfville.Gm.Scoring.Data.Services
             //        if (tee == null)
             //            continue;
 
-                    
+
             //        var differentialValue = (memberScore.Score - tee.Rating) * 113 / tee.Slope;
             //        var handicapDifferential = new HandicapDifferential
             //        {
@@ -84,7 +84,7 @@ namespace Golfville.Gm.Scoring.Data.Services
             //    handicap.PlayerHandicap = differentialList.Take(8).Average(x => x.Differential);
             //}
 
-            return handicap;            
+            return handicap;
         }
     }
 }

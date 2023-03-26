@@ -1,4 +1,9 @@
-﻿namespace Golfville.Gm.Scoring.Data.Repositories
+﻿using Golfville.Gm.Scoring.Data.Entities;
+
+namespace Golfville.Gm.Scoring.Data.Repositories
 {
-    public interface ITeeBoxRepository { }
+    public interface ITeeBoxRepository
+    {
+        Task<List<TeeBox>> GetTeeBoxAsync(List<int> teeBoxIds);
+    }
 }
