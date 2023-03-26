@@ -4,9 +4,9 @@ namespace Golfville.Gm.Scoring.Data.SeedData
 {
     internal class TeeBoxSeeder
     {
-        public static List<TeeBox> GetTeeBoxes()
+        public static List<TeeBox> Get()
         {
-            var teeBoxes = new List<TeeBox>()
+            return new List<TeeBox>()
             {
                 new()
                 {
@@ -189,8 +189,6 @@ namespace Golfville.Gm.Scoring.Data.SeedData
                     Slope = 118
                 }
             };
-
-            return teeBoxes;
         }
     }
 }
