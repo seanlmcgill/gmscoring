@@ -4,7 +4,7 @@ namespace Golfville.Gm.Scoring.Data.SeedData
 {
     internal class MemberScoresSeeder
     {
-        public static MemberScore[] GetTestMemberScores()
+        public static MemberScore[] Get()
         {
             var seedScores = new List<MemberScore>();
             var baseDate = new DateTime(2022, 01, 01);

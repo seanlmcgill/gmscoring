@@ -4,9 +4,9 @@ namespace Golfville.Gm.Scoring.Data.SeedData
 {
     internal class CourseSeeder
     {
-        public static Course[] GetCourses()
+        public static List<Course> Get()
         {
-            var courseList = new List<Course>()
+            return new List<Course>()
             {
                 new()
                 {
@@ -59,8 +59,6 @@ namespace Golfville.Gm.Scoring.Data.SeedData
                     PublicAccess = true
                 }
             };
-
-            return courseList.ToArray();
         }
     }
 }

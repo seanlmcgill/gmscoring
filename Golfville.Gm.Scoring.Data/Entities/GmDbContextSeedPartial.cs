@@ -10,8 +10,14 @@ namespace Golfville.Gm.Scoring.Data.Entities
     {
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Course>().HasData(CourseSeeder.GetCourses());
-            modelBuilder.Entity<TeeBox>().HasData(TeeBoxSeeder.GetTeeBoxes());
+            modelBuilder.Entity<Course>().HasData(CourseSeeder.Get());
+            var teeBoxes = TeeBoxSeeder.Get();
+            modelBuilder.Entity<TeeBox>().HasData(teeBoxes);
+            var members = MemberSeeder.Get();
+            modelBuilder.Entity<Member>().HasData(members);
+            modelBuilder
+                .Entity<MemberScore>()
+                .HasData(new MemberScoreSeeder(members, teeBoxes).Get());
         }
     }
 }
