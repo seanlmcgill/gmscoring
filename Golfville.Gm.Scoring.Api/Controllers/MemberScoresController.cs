@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Golfville.Gm.ScoringApi.Controllers
 {
+    [Route("api/v{version:apiVersion}")]
     [ApiController]
     public class MemberScoresController : ControllerBase
     {
@@ -14,21 +15,24 @@ namespace Golfville.Gm.ScoringApi.Controllers
             _memberScoreRepository = memberScoreRepository;
         }
 
-        [HttpGet("api/member/{memberId}/memberscores", Name = "GetMemberScores")]
+        [ApiVersion("1.0")]
+        [HttpGet("member/{memberId}/memberscores", Name = "GetMemberScores")]
         public async Task<IActionResult> Get(int memberId, int top = 20)
         {
             var scores = await _memberScoreRepository.GetRecentScores(memberId, top);
             return Ok(scores);
         }
 
-        [HttpGet("api/memberscores/{year}", Name = "GetAllMemberScores")]
+        [ApiVersion("1.0")]
+        [HttpGet("memberscores/{year}", Name = "GetAllMemberScores")]
         public async Task<IActionResult> GetAllAsync(int year)
         {
             var scores = await _memberScoreRepository.GetAllForYearAsync(year);
             return Ok(scores);
         }
 
-        [HttpPost("api/memberscores", Name = "AddMemberScore")]
+        [ApiVersion("1.0")]
+        [HttpPost("memberscores", Name = "AddMemberScore")]
         public async Task<MemberScore> PostAsync(MemberScore score)
         {
             var newScore = await _memberScoreRepository.AddScoreAsync(score);

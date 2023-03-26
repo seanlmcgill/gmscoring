@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Golfville.Gm.Scoring.Api.Controllers
 {
+    [Route("api/v{version:apiVersion}")]
     [ApiController]
     public class CoursesController : ControllerBase
     {
@@ -13,7 +14,8 @@ namespace Golfville.Gm.Scoring.Api.Controllers
             _courseRepository = courseRepository;
         }
 
-        [HttpGet("api/courses", Name = "GetCourses")]
+        [ApiVersion("1.0")]
+        [HttpGet("courses", Name = "GetCourses")]
         public async Task<IActionResult> Get(string stateCode = "")
         {
             var courses = await _courseRepository.GetCoursesAsync(stateCode);

@@ -27,6 +27,19 @@ builder.Services.AddScoringRepositoryServices(
     options => options.UseInMemoryDatabase(inMemDbName).EnableSensitiveDataLogging()
 );
 
+builder.Services.AddApiVersioning(opt =>
+{
+    opt.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0);
+    opt.AssumeDefaultVersionWhenUnspecified = true;
+    opt.ReportApiVersions = true;
+});
+
+builder.Services.AddVersionedApiExplorer(setup =>
+{
+    setup.GroupNameFormat = "'v'VVV";
+    setup.SubstituteApiVersionInUrl = true;
+});
+
 var app = builder.Build();
 
 logger.Information("Seeding test data into in memory database: {inMemDbName}", inMemDbName);
