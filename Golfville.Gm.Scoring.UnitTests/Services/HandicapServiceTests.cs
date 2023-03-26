@@ -136,5 +136,21 @@ namespace Golfville.Gm.Scoring.UnitTests.Services
             var handicap = await service.CalculateAsync(MemberId);
             Assert.True(handicap.Eligible);
         }
+
+        [Fact]
+        public async Task HandicapCalculation_ShouldBeCorrect()
+        {
+            const double expectedHandicap = 3.1;
+
+            _memberScoreRepositoryMock
+                .Setup(x => x.GetRecentScores(MemberId, HandicapService.HandicapScoreCount))
+                .ReturnsAsync(_testScores);
+            var service = new HandicapService(
+                _memberScoreRepositoryMock.Object,
+                _courseRepositoryMock.Object
+            );
+            var handicap = await service.CalculateAsync(MemberId);
+            Assert.Equal(expectedHandicap, handicap.PlayerHandicap);
+        }
     }
 }

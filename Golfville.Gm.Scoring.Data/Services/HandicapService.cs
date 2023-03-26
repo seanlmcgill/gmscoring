@@ -87,7 +87,7 @@ namespace Golfville.Gm.Scoring.Data.Services
                 .Take(differentialsCountToUse)
                 .Average(x => x.Differential);
 
-            handicapValue *= 0.96;
+            handicapValue = double.Round(handicapValue * 0.96, 1);
 
             return new Handicap
             {
