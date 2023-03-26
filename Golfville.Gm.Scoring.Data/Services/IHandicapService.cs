@@ -4,6 +4,6 @@ namespace Golfville.Gm.Scoring.Data.Services
 {
     public interface IHandicapService
     {
-        public Task<Handicap> Calculate(int memberId);
+        public Task<Handicap> CalculateAsync(int memberId);
     }
 }
