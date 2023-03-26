@@ -18,7 +18,7 @@ namespace Golfville.Gm.Scoring.Api.Controllers
         [HttpGet("member/{memberId}/handicap", Name = "GetHandicapForMember")]
         public async Task<IActionResult> GetForMemberAsync(int memberId)
         {
-            var handicap = await _handicapService.Calculate(memberId);
+            var handicap = await _handicapService.CalculateAsync(memberId);
             return Ok(handicap);
         }
     }

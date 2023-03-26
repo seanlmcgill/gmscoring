@@ -6,22 +6,22 @@ namespace Golfville.Gm.Scoring.Data.Services
 {
     public class HandicapService : IHandicapService
     {
-        private const int HandicapScoreCount = 20;
-        private const int MinScoresRequiredForHandicap = 3;
+        public const int HandicapScoreCount = 20;
+        public const int MinScoresRequiredForHandicap = 10;
 
         private readonly IMemberScoreRepository _memberScoreRepository;
-        private readonly ITeeBoxRepository _teeBoxRepository;
+        private readonly ICourseRepository _courseRepository;
 
         public HandicapService(
             IMemberScoreRepository memberScoreRepository,
-            ITeeBoxRepository teeBoxRepository
+            ICourseRepository courseRepository
         )
         {
             _memberScoreRepository = memberScoreRepository;
-            _teeBoxRepository = teeBoxRepository;
+            _courseRepository = courseRepository;
         }
 
-        public async Task<Handicap> Calculate(int memberId)
+        public async Task<Handicap> CalculateAsync(int memberId)
         {
             var memberScores = await _memberScoreRepository.GetRecentScores(
                 memberId,
@@ -29,62 +29,72 @@ namespace Golfville.Gm.Scoring.Data.Services
             );
 
             if (memberScores.Count < MinScoresRequiredForHandicap)
-                return new Handicap { NotEligible = true };
+                return new Handicap { Eligible = false };
 
-            var handicap = Calculate(memberScores);
+            var handicap = await CalculateAsync(memberScores);
 
             return handicap;
         }
 
-        private static Handicap Calculate(List<MemberScore> handicapScores)
+        private async Task<Handicap> CalculateAsync(List<MemberScore> handicapScores)
         {
-            var handicap = new Handicap();
-            var differentialList = new List<HandicapDifferential>();
+            if (handicapScores.Count < MinScoresRequiredForHandicap)
+                throw new InvalidOperationException(
+                    "Cannot calculate handicap with less than 3 scores"
+                );
+
+            var distinctCourseIds = handicapScores
+                .Select(x => x.TeeBox.CourseId)
+                .Distinct()
+                .ToList();
+            var courses = await _courseRepository.GetCoursesAsync(distinctCourseIds);
 
             // x => (x.Score - x.TeeBox.Rating) * 113 / x.TeeBox.Slope)
             // Handicap differential = (Adjusted Gross Score - rating of the course) X 113 / Course slope ratings.
-            var differentials = handicapScores.Select(x =>
-                                    new HandicapDifferential
-                                    {
-                                        Course = "",
-                                        TeeBox = "",
-                                        Score = 0,
-                                        Differential = 0,
-                                        PostDateTime = DateTime.MinValue
-                                    }).ToList();
+            var differentials = handicapScores
+                .Select(
+                    x =>
+                        new HandicapDifferential
+                        {
+                            Course =
+                                courses.SingleOrDefault(c => c.CourseId == x.TeeBox.CourseId)?.Name
+                                ?? string.Empty,
+                            TeeBox = x.TeeBox.Name,
+                            Score = x.Score,
+                            Differential =
+                                (double)((x.Score - x.TeeBox.Rating) * 113) / x.TeeBox.Slope,
+                            PostDateTime = x.PostDateTime
+                        }
+                )
+                .ToList();
 
+            // Depending on sore count, differential count adjusts
+            int differentialsCountToUse;
+            var count = differentials.Count;
+            if (count >= MinScoresRequiredForHandicap && count < 15)
+                differentialsCountToUse = 3;
+            else if (count >= 15 && count < 20)
+                differentialsCountToUse = 6;
+            else if (count >= 20)
+                differentialsCountToUse = 10;
+            else
+                throw new InvalidOperationException(
+                    $"Cannot calculiate handicap with less than {MinScoresRequiredForHandicap} differentials"
+                );
 
-            //foreach (var memberScore in memberScores)
-            //{
-            //    var course = courses.TeeBoxe
-            //        .Where(x => x.CourseId == memberScore.CourseId)
-            //        .SingleOrDefault();
-            //    if (course != null)
-            //    {
-            //        var tee = course.TeeList
-            //            .Where(x => x.Id == memberScore.TeeBoxId)
-            //            .SingleOrDefault();
-            //        if (tee == null)
-            //            continue;
+            var handicapValue = differentials
+                .OrderBy(x => x.Differential)
+                .Take(differentialsCountToUse)
+                .Average(x => x.Differential);
 
+            handicapValue *= 0.96;
 
-            //        var differentialValue = (memberScore.Score - tee.Rating) * 113 / tee.Slope;
-            //        var handicapDifferential = new HandicapDifferential
-            //        {
-            //            Course = course.Name,
-            //            TeeBox = tee.Description,
-            //            Score = memberScore.Score,
-            //            Differential = differentialValue,
-            //            PostDateTime = memberScore.PostDateTime
-            //        };
-            //        differentialList.Add(handicapDifferential);
-            //    }
-
-            //    differentialList = differentialList.OrderBy(x => x.Differential).ToList();
-            //    handicap.PlayerHandicap = differentialList.Take(8).Average(x => x.Differential);
-            //}
-
-            return handicap;
+            return new Handicap
+            {
+                HandicapDifferentials = differentials,
+                PlayerHandicap = handicapValue,
+                Eligible = true
+            };
         }
     }
 }
