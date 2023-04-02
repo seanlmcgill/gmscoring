@@ -49,10 +49,11 @@ using (var serviceScope = app.Services.CreateScope())
     dbContext?.Database.EnsureCreated();
 }
 
+app.UseSwagger();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
     app.UseSwaggerUI();
 }
 
